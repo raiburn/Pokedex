@@ -1,0 +1,53 @@
+const express = require('express');
+const app = express();
+const port = 3000;
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+const data = [
+{
+id: 1,
+name: 'pikachu',
+type: 'electric',
+}
+];
+
+app.get('/', (req, res) => res.send('Hello World!'));
+
+app.get('/pokemon', function (req, res) {
+res.json(data);
+});
+
+app.get('/pokemon/:id', function (req, res) {
+const {id} = req.params;
+console.log(id);
+let index = data.findIndex((element) => {
+return id == element.id;
+});
+res.json(data[index]);
+});
+
+app.post('/pokemon', (req, res) => {
+data.push(req.body);
+res.json(req.body);
+});
+
+app.put('/pokemon/:id', (req, res) => {
+const {id} = req.params;
+let index = data.findIndex((element) => {
+return id == element.id;
+});
+if(data => 0) {
+data[index] = req.body;
+}
+res.json(data);
+});
+
+app.delete('pokemon/:id', (req, res) => {
+const {id} = req.params;
+let index = data.findIndex((element) => {
+return id == element.id;
+});
+});
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
